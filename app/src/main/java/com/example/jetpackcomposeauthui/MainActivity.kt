@@ -108,6 +108,7 @@ fun NavigationView() {
                 Detail(navController, userObject)
             }
         }
+        Composable("ulasan"){ Ulasan(destinationReviewModel = , navController = )}
 
     }
 
