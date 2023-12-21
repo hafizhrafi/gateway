@@ -196,7 +196,7 @@ fun HomeTripItem(homeTripModel: HomeTripModel, navController: NavController) {
                     text = homeTripModel.location,
                     fontFamily = AlegreyaFontFamily,
                     fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp,
+                    fontSize = 18.sp,
                 )
 
                 Spacer(modifier = Modifier.weight(1f))
@@ -207,10 +207,10 @@ fun HomeTripItem(homeTripModel: HomeTripModel, navController: NavController) {
                 }
 
                 Text(
-                    text = getRatingAverage(),
+                    text = "Rate: "+getRatingAverage(),
                     fontFamily = AlegreyaFontFamily,
                     fontWeight = FontWeight.Normal,
-                    fontSize = 12.sp
+                    fontSize = 18.sp
                 )
             }
 
