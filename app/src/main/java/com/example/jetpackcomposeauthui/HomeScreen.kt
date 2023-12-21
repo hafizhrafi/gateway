@@ -2,6 +2,7 @@ package com.example.travelapp.ui.features
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -49,10 +51,10 @@ fun HomeScreen(navController: NavController) {
 
         item {
             Text(
-                text = "Liburan Terbaru",
+                text = "Rekomendasi Liburan Untukmu",
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
-                fontSize = 14.sp,
+                fontSize = 20.sp,
                 modifier = Modifier.padding(
                     top = 20.dp,
                     start = 16.dp,
@@ -87,21 +89,21 @@ fun HomeHeader() {
             contentDescription = "",
             contentScale = ContentScale.Crop,
             modifier = Modifier
-                .height(300.dp)
-                .alpha(0.2f)
+                .height(200.dp)
+//                .alpha(0.2f)
                 .fillMaxWidth()
         )
 
 
         Column(
             modifier = Modifier
-                .align(Alignment.Center)
+                .align(Alignment.TopStart)
                 .statusBarsPadding()
                 .padding(16.dp)
         ) {
 
             Text(
-                text = "Haiii sayangku",
+                text = "Haii User",
                 fontFamily = AlegreyaFontFamily,
                 fontWeight = FontWeight.Bold,
                 fontSize = 38.sp,
@@ -154,6 +156,13 @@ fun HomeTripItem(homeTripModel: HomeTripModel, navController: NavController) {
         modifier = Modifier
             .padding(4.dp)
             .padding(6.dp)
+            .background(
+                Brush.verticalGradient(
+                    listOf(Color.Green, Color.White),
+                    startY = 0.0f,
+                    endY = 100.0f
+                )
+            )
             .clickable {
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     "index",

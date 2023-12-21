@@ -29,7 +29,7 @@ fun CTextField(
                 style = TextStyle(
                     fontSize = 18.sp,
                     fontFamily = AlegreyaSansFontFamily,
-                    color = Color(0xFFBEC2C2)
+                    color = Color(0xFF000000)
                 )
             )
         },
@@ -38,8 +38,8 @@ fun CTextField(
             .padding(bottom = 8.dp),
         colors = TextFieldDefaults.textFieldColors(
             containerColor = Color.Transparent,
-            focusedIndicatorColor = Color(0xFFBEC2C2),
-            unfocusedIndicatorColor = Color(0xFFBEC2C2)
+            focusedIndicatorColor = Color(0xFF000000),
+            unfocusedIndicatorColor = Color(0xFF000000)
         )
 
     )
