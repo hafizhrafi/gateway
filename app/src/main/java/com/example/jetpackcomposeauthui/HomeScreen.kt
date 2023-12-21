@@ -1,12 +1,14 @@
 package com.example.travelapp.ui.features
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-//import androidx.compose.material.Icon
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,14 +17,24 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
+import com.example.jetpackcomposeauthui.HomeTripModel
 import com.example.jetpackcomposeauthui.R
+import com.example.jetpackcomposeauthui.hutanReview
+import com.example.jetpackcomposeauthui.kampungReview
+import com.example.jetpackcomposeauthui.museumMpuReview
+import com.example.jetpackcomposeauthui.museumReview
+import com.example.jetpackcomposeauthui.rainbowReview
 import com.example.jetpackcomposeauthui.ui.theme.AlegreyaFontFamily
+import java.util.Locale
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -50,7 +62,7 @@ fun HomeScreen(navController: NavController) {
         }
 
         itemsIndexed(tripListing) { position, data ->
-            HomeTripItem(homeTripModel = data,navController = navController)
+            HomeTripItem(homeTripModel = data, navController = navController)
         }
 
         item {
@@ -129,90 +141,162 @@ fun HomeHeader() {
 }
 
 
-
-data class HomeTripModel(
-    val image: String,
-    val title: String,
-    val location: String,
-    val rating: Float
-)
-
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun HomeTripItem(homeTripModel: HomeTripModel,navController: NavController) {
+fun HomeTripItem(homeTripModel: HomeTripModel, navController: NavController) {
+    val context = LocalContext.current
 
-    Column(
+    Card(
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = Color(0xFF6DAAA3)
+        ),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp, vertical = 8.dp)
+            .padding(4.dp)
+            .padding(6.dp)
+            .clickable {
+                navController.currentBackStackEntry?.savedStateHandle?.set(
+                    "index",
+                    tripListing.indexOf(homeTripModel)
+                )
+                navController.navigate("detail")
+            }
+
     ) {
-
-        Image(
-            painter =painterResource(id = R.drawable.candi),
-            contentDescription = "",
-            contentScale = ContentScale.Crop,
+        Column(
             modifier = Modifier
-                .clip(RoundedCornerShape(8.dp))
-                .clickable {
-                    navController.navigate("detail")
-                }
-                .height(200.dp)
                 .fillMaxWidth()
-        )
+                .padding(horizontal = 16.dp, vertical = 8.dp)
+        ) {
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        Row() {
-
-            Text(
-                text = homeTripModel.location,
-                fontFamily = AlegreyaFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = 12.sp,
+            GlideImage(
+                model = homeTripModel.image,
+                contentDescription = "Banner",
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier
+                    .clip(RoundedCornerShape(percent = 10))
+                    .height(250.dp)
+                    .align(alignment = Alignment.CenterHorizontally)
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Spacer(modifier = Modifier.height(8.dp))
+
+            Row() {
+
+                Text(
+                    text = homeTripModel.location,
+                    fontFamily = AlegreyaFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp,
+                )
+
+                Spacer(modifier = Modifier.weight(1f))
+
+                fun getRatingAverage(): String {
+                    val rateAverage: Double = homeTripModel.reviewList.map { it.rate }.average()
+                    return "%,.2f".format(Locale.ENGLISH, rateAverage)
+                }
+
+                Text(
+                    text = getRatingAverage(),
+                    fontFamily = AlegreyaFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 12.sp
+                )
+            }
 
             Text(
-                text = homeTripModel.rating.toString(),
+                text = homeTripModel.title,
                 fontFamily = AlegreyaFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = 12.sp
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 18.sp,
+                lineHeight = 24.sp
             )
+
+            Text(
+                text = if (homeTripModel.isFraud) "Hasil Prediksi untuk ${homeTripModel.title} menggunakan TensorFlow Lite: Terdeteksi perilaku yang mencurigakan.\n" else "Hasil Prediksi untuk ${homeTripModel.title} menggunakan TensorFlow Lite: Tidak terdeteksi perilaku yang mencurigakan.\n",
+                fontFamily = AlegreyaFontFamily,
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 18.sp,
+                lineHeight = 24.sp
+            )
+
+
         }
-
-        Text(
-            text = homeTripModel.title,
-            fontFamily = AlegreyaFontFamily,
-            fontWeight = FontWeight.SemiBold,
-            fontSize = 18.sp,
-            lineHeight = 24.sp
-        )
-
     }
 
 
 }
 
+val keyword: List<String> =
+    listOf("pungli", "pungutan li4r", "memalak", "parkir liar", "uang tambahan")
+var museumMpuMappedReview: List<String> = museumMpuReview.map { it.review }
+var museumMappedReview: List<String> = museumReview.map { it.review }
+var rainbowMappedReview: List<String> = rainbowReview.map { it.review }
+var hutanMappedReview: List<String> = hutanReview.map { it.review }
+var kampungMappedReview: List<String> = kampungReview.map { it.review }
+
 val tripListing = listOf<HomeTripModel>(
     HomeTripModel(
-        "R.drawable.candi.png",
-        "Candi terbaru hanya 45k",
-        "Candi terbaru hanya 45k",
-        4.8f
+        "https://drive.google.com/uc?id=1aL4a0XoyxdG4VzI2_rpkyBkjCyo986Pb",
+        "Museum Mpu Tantular ",
+        "Surabaya",
+        4.8f,
+        "Budaya",
+        "Museum Negeri Mpu Tantular adalah sebuah museum negeri yang berlokasi di kecamatan Buduran, Sidoarjo, Jawa Timur.Awalnya, museum ini bernama Stedelijk Historisch Museum Soerabaia, didirikan oleh Godfried von Faber pada tahun 1933 dan diresmikan pada tanggal 25 Juli 1937. Saat ini, museum ini dikelola oleh Unit Pelaksana Teknis pada Departemen Kebudayaan dan Pariwisata.",
+        museumMpuReview,
+        keyword.any { it in museumMpuMappedReview }
     ),
 
     HomeTripModel(
-        "https://d3hne3c382ip58.cloudfront.net/files/uploads/bookmundi/resized/cmsfeatured/south-india-tour-package-1555403191-785X440.jpg",
-        "2 hari / 2 orang",
-        "Sungai terbaru hanya 50k ",
-        5.9f
+        "https://drive.google.com/uc?id=1mcYdrdwn5x7Z-IT2VtQQBShFAbP63cgt",
+        "Hutan Kota Srengsreng ",
+        "Jakarta",
+        4.8f,
+        "Taman Hiburan",
+        "Selain Taman Hutan Mangrove dan Pantai Indah Kapuk, salah satu taman yang sudah cukup terkenal lama bisa dijumpai di sekitar Universitas Indonesia Depok, letaknya di pinggiran Jakarta, namanya Hutan Kota Srengseng. Sesuai namanya, kawasan wisata ini terletak di daerah Srengseng Kembangan Jakbar, letaknya dekat dengan daerah Kemayoran, Kebon Jeruk serta Rawa Buaya. Hutan Srengseng ini menjadi salah satu kawasan alam hijua yang bisa dijumpai di Daerah Khusus Ibukota Jakarta. Namun perlu diketahui bukan Srengseng Sawah ya, itu sudah berbeda. Kehadiran Taman Kota ini memberikan peran penting di sektor alam Jakarta yang tengah mengalami perkembangan cukup pesat.",
+        hutanReview,
+        keyword.any { it in hutanMappedReview }
     ),
 
     HomeTripModel(
-        "https://imgcld.yatra.com/ytimages/image/upload/t_holidays_srplist_tablet_hc/v1501843603/DO_NOT_USE_Editorial_Images/Grand_palace_and_Wat_phra_keaw.jpg",
-        "1 hari / 2 orang",
-        "Pasar Induk Among Tani",
-        4.8f
+        "https://drive.google.com/uc?id=1G-AXhHtMhVNv3PANdCoB7lUqDCT7xpKF",
+        "Kampung Wisata Kadipaten",
+        "Yogyakarta",
+        4.8f,
+        "Budaya",
+        "Kampung Wisata Kadipaten secaara kewilayahan berada di Kelurahan Kadipaten Kecamatan Kraton. Keberadaannya juga berfungsi sebagai penyangga obyek wisata Kraton Kasultanan Yogyakarta. Sesuai dengan potensi yang ada Kampung Wisata Kadipaten kemudian mengangkat tema â€œArt and Heritage Turismâ€\u009D sebagai brandinngnya. Kawasan kampung wisata ini menjadi sangat unik dan spesifik karena disana banyak terdapat bangunan situs cagar busaya terutama bangunan Dalem Pangeran. Nama Kadipaten sendiri konon berasal dari nama kawasan yang disana banyak terdapat bangunan situs cagar budaya terutama bangunan Dalem Pangeran. Nama Kadipaten konon berasal dari nama kawasan yang disana banyak ditinggali oleh kerabat Kraton yang sekaligus sebagai pengagung Kraton.",
+        kampungReview,
+        keyword.any { it in kampungMappedReview }
+
+
     ),
+
+    HomeTripModel(
+        "https://drive.google.com/uc?id=1dNNc-jhmIqYG0zrKouI0n7zGk-9p4PeV",
+        "Rainbow Garden ",
+        "Bandung",
+        4.8f,
+        "Cagar Alam",
+        "Rainbow Garden Harapan Indah salah satu taman rekreasi yang terutama cocok untuk keluarga. Rainbow Garden Bekasi memadukan arena permainan anak dengan wisata kuliner. Berbagai wahana dan aktivitas tersedia di taman wisata penuh warna seluas 3000 m2 ini.",
+        rainbowReview,
+        keyword.any { it in rainbowMappedReview }
+
+
+    ),
+
+    HomeTripModel(
+        "https://drive.google.com/uc?id=1eJSawQcwf6vOj9QXT8yvsxEioBJZqstU",
+        "Museum Kereta Ambarawa",
+        "Semarang",
+        4.8f,
+        "Budaya",
+        "Museum Kereta Api Ambarawa (bahasa Inggris: Indonesian Railway Museum, Ambarawa) adalah sebuah stasiun kereta api yang sudah dialihfungsikan menjadi sebuah museum serta merupakan museum perkeretaapian pertama di Indonesia. Museum ini memiliki koleksi kereta api yang pernah berjaya pada zamannya. Museum ini secara administratif berada di Desa Panjang, Ambarawa, Semarang. Museum yang terletak pada ketinggian +474,40 meter ini termasuk dalam Daerah Operasi IV Semarang dan dikelola oleh Unit Pusat Pelestarian dan Desain Arsitektur PT Kereta Api Indonesia bekerja sama dengan Pemerintah Provinsi Jawa Tengah.\n",
+        museumReview,
+        keyword.any { it in museumMappedReview }
+
+
+    ),
+
 
     )
