@@ -112,6 +112,16 @@ fun HomeHeader() {
                 .statusBarsPadding()
                 .padding(16.dp)
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = null,
+                modifier = Modifier
+                    .width(100.dp)
+                    .height(50.dp),
+                contentScale = ContentScale.Fit
+            )
+            Spacer(modifier = Modifier.weight(1f))
+
 
             Text(
                 text = "Haii User",
@@ -129,6 +139,7 @@ fun HomeHeader() {
                 lineHeight = 24.sp,
                 letterSpacing = ((-0.2).sp)
             )
+
 
             Spacer(modifier = Modifier.height(24.dp))
 

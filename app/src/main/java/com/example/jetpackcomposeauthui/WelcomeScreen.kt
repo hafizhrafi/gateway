@@ -68,8 +68,8 @@ fun WelcomeScreen(
                 painter = painterResource(id = R.drawable.logo),
                 contentDescription = null,
                 modifier = Modifier
-                    .width(340.dp)
-                    .height(240.dp),
+                    .width(300.dp)
+                    .height(200.dp),
                 contentScale = ContentScale.Fit
             )
 
