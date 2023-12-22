@@ -286,7 +286,7 @@ val tripListing = listOf<HomeTripModel>(
         "Jakarta",
         4.8f,
         "Taman Hiburan",
-        "Selain Taman Hutan Mangrove dan Pantai Indah Kapuk, salah satu taman yang sudah cukup terkenal lama bisa dijumpai di sekitar Universitas Indonesia Depok, letaknya di pinggiran Jakarta, namanya Hutan Kota Srengseng. Sesuai namanya, kawasan wisata ini terletak di daerah Srengseng Kembangan Jakbar, letaknya dekat dengan daerah Kemayoran, Kebon Jeruk serta Rawa Buaya. Hutan Srengseng ini menjadi salah satu kawasan alam hijua yang bisa dijumpai di Daerah Khusus Ibukota Jakarta. Namun perlu diketahui bukan Srengseng Sawah ya, itu sudah berbeda. Kehadiran Taman Kota ini memberikan peran penting di sektor alam Jakarta yang tengah mengalami perkembangan cukup pesat.",
+        "Selain Taman Hutan Mangrove dan Pantai Indah Kapuk, salah satu taman yang sudah cukup terkenal lama bisa dijumpai di sekitar Universitas Indonesia Depok, letaknya di pinggiran Jakarta, namanya Hutan Kota Srengseng. Sesuai namanya, kawasan wisata ini terletak di daerah Srengseng Kembangan Jakbar, letaknya dekat dengan daerah Kemayoran, Kebon Jeruk serta Rawa Buaya. Hutan Srengseng ini menjadi salah satu kawasan alam hijua yang bisa dijumpai di Daerah Khusus Ibukota Jakarta.",
         hutanReview,
         keyword.any { it in hutanMappedReview }
     ),
@@ -297,7 +297,7 @@ val tripListing = listOf<HomeTripModel>(
         "Yogyakarta",
         4.8f,
         "Budaya",
-        "Kampung Wisata Kadipaten secaara kewilayahan berada di Kelurahan Kadipaten Kecamatan Kraton. Keberadaannya juga berfungsi sebagai penyangga obyek wisata Kraton Kasultanan Yogyakarta. Sesuai dengan potensi yang ada Kampung Wisata Kadipaten kemudian mengangkat tema â€œArt and Heritage Turismâ€\u009D sebagai brandinngnya. Kawasan kampung wisata ini menjadi sangat unik dan spesifik karena disana banyak terdapat bangunan situs cagar busaya terutama bangunan Dalem Pangeran. Nama Kadipaten sendiri konon berasal dari nama kawasan yang disana banyak terdapat bangunan situs cagar budaya terutama bangunan Dalem Pangeran. Nama Kadipaten konon berasal dari nama kawasan yang disana banyak ditinggali oleh kerabat Kraton yang sekaligus sebagai pengagung Kraton.",
+        "Kampung Wisata Kadipaten secaara kewilayahan berada di Kelurahan Kadipaten Kecamatan Kraton. Keberadaannya juga berfungsi sebagai penyangga obyek wisata Kraton Kasultanan Yogyakarta. Sesuai dengan potensi yang ada Kampung Wisata Kadipaten kemudian mengangkat tema â€œArt and Heritage Turismâ€\u009D sebagai brandinngnya. Kawasan kampung wisata ini menjadi sangat unik dan spesifik karena disana banyak terdapat bangunan situs cagar busaya terutama bangunan Dalem Pangeran.",
         kampungReview,
         keyword.any { it in kampungMappedReview }
 
@@ -323,7 +323,7 @@ val tripListing = listOf<HomeTripModel>(
         "Semarang",
         4.8f,
         "Budaya",
-        "Museum Kereta Api Ambarawa (bahasa Inggris: Indonesian Railway Museum, Ambarawa) adalah sebuah stasiun kereta api yang sudah dialihfungsikan menjadi sebuah museum serta merupakan museum perkeretaapian pertama di Indonesia. Museum ini memiliki koleksi kereta api yang pernah berjaya pada zamannya. Museum ini secara administratif berada di Desa Panjang, Ambarawa, Semarang. Museum yang terletak pada ketinggian +474,40 meter ini termasuk dalam Daerah Operasi IV Semarang dan dikelola oleh Unit Pusat Pelestarian dan Desain Arsitektur PT Kereta Api Indonesia bekerja sama dengan Pemerintah Provinsi Jawa Tengah.\n",
+        "Museum Kereta Api Ambarawa (bahasa Inggris: Indonesian Railway Museum, Ambarawa) adalah sebuah stasiun kereta api yang sudah dialihfungsikan menjadi sebuah museum serta merupakan museum perkeretaapian pertama di Indonesia. Museum ini memiliki koleksi kereta api yang pernah berjaya pada zamannya. Museum ini secara administratif berada di Desa Panjang, Ambarawa, Semarang.\n",
         museumReview,
         keyword.any { it in museumMappedReview }
 
