@@ -3,10 +3,12 @@ package com.example.travelapp.ui.features
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -22,6 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,7 +45,15 @@ import java.util.Locale
 fun HomeScreen(navController: NavController) {
 
 
-    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                Brush.verticalGradient(
+                    listOf(Color(0xFFF0FFF9), Color(0xFF94D4CB)),
+                )
+            )
+    ) {
 
 
         item {
@@ -156,13 +167,6 @@ fun HomeTripItem(homeTripModel: HomeTripModel, navController: NavController) {
         modifier = Modifier
             .padding(4.dp)
             .padding(6.dp)
-            .background(
-                Brush.verticalGradient(
-                    listOf(Color.Green, Color.White),
-                    startY = 0.0f,
-                    endY = 100.0f
-                )
-            )
             .clickable {
                 navController.currentBackStackEntry?.savedStateHandle?.set(
                     "index",
@@ -207,7 +211,7 @@ fun HomeTripItem(homeTripModel: HomeTripModel, navController: NavController) {
                 }
 
                 Text(
-                    text = "Rate: "+getRatingAverage(),
+                    text = "Rate: " + getRatingAverage(),
                     fontFamily = AlegreyaFontFamily,
                     fontWeight = FontWeight.Normal,
                     fontSize = 18.sp
@@ -222,13 +226,32 @@ fun HomeTripItem(homeTripModel: HomeTripModel, navController: NavController) {
                 lineHeight = 24.sp
             )
 
-            Text(
-                text = if (homeTripModel.isFraud) "Hasil Prediksi untuk ${homeTripModel.title} menggunakan TensorFlow Lite: Terdeteksi perilaku yang mencurigakan.\n" else "Hasil Prediksi untuk ${homeTripModel.title} menggunakan TensorFlow Lite: Tidak terdeteksi perilaku yang mencurigakan.\n",
-                fontFamily = AlegreyaFontFamily,
-                fontWeight = FontWeight.SemiBold,
-                fontSize = 18.sp,
-                lineHeight = 24.sp
-            )
+            Spacer(modifier = Modifier.height(12.dp))
+            Box( contentAlignment = Alignment.Center) {
+                Box(
+                    contentAlignment = Alignment.Center,
+                    modifier = Modifier
+                        .border(
+                            width = 2.dp,
+                            color = Color(0xFF02231A),
+                            shape = CircleShape
+                        )
+                        .clip(CircleShape)
+                        .background(Color(0x4DCCCCCC))
+                        .padding(20.dp)
+                ) {
+                    Text(
+                        text = if (homeTripModel.isFraud) "Hasil Prediksi untuk ${homeTripModel.title} menggunakan TensorFlow Lite: Terdeteksi perilaku yang mencurigakan.\n" else "Hasil Prediksi untuk ${homeTripModel.title} menggunakan TensorFlow Lite: Tidak terdeteksi perilaku yang mencurigakan.\n",
+                        fontFamily = AlegreyaFontFamily,
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        lineHeight = 24.sp
+                    )
+                }
+
+
+            }
 
 
         }

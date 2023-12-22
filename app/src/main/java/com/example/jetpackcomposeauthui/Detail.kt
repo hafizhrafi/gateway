@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,86 +50,120 @@ fun Detail(navController: NavController, index: Int) {
     val homeTripModel: HomeTripModel = tripListing[index]
 
 
-        Column(modifier = Modifier.fillMaxSize().background(
-                Brush.verticalGradient(
-                    listOf(Color.Cyan, Color.White),
-                    startY = 90.0f,
-                    endY = 100.0f
+    Column {
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .background(
+                    Brush.verticalGradient(
+                        listOf(Color(0xFFF0FFF9), Color(0xFF94D4CB)),
+                    )
                 )
-        )) {
-
-            GlideImage(
-                model = homeTripModel.image,
-                contentDescription = "Banner",
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier
-                    .clip(RoundedCornerShape(percent = 10))
-                    .height(250.dp)
+                .padding(16.dp)
+        ) {
+            item {
+                GlideImage(
+                    model = homeTripModel.image,
+                    contentDescription = "Banner",
+                    contentScale = ContentScale.FillBounds,
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(percent = 10))
+                        .height(250.dp)
 //                    .align(alignment = Alignment)
-            )
+                )
+            }
+
 //            Spacer(modifier = Modifier.weight(1f))
 
-            Text(
-                text = homeTripModel.title,
-                fontFamily = AlegreyaFontFamily,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 30.sp,
-            )
+            item {
+                Text(
+                    text = homeTripModel.title,
+                    fontFamily = AlegreyaFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 30.sp,
+                )
+            }
+
+            item {
+                Text(
+                    text = "\n" + homeTripModel.location + "\n",
+                    fontFamily = AlegreyaFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 18.sp,
+                )
+            }
+
+            item {
+                Text(
+                    text = homeTripModel.jenisWisata + "\n",
+                    fontFamily = AlegreyaFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 18.sp,
+                )
+            }
+
+            item {
+                Text(
+                    text = "About",
+                    fontFamily = AlegreyaFontFamily,
+                    fontWeight = FontWeight.ExtraBold,
+                    fontSize = 22.sp,
+                )
+            }
+
+            item {
+                Text(
+                    text = homeTripModel.description,
+                    fontFamily = AlegreyaFontFamily,
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 18.sp,
+                )
+            }
+
+            item { Spacer(modifier = Modifier.height(12.dp)) }
+
+            item {
+                CButton(text = "Ulasan Pengunjung",
+                    onClick = {
+                        navController.currentBackStackEntry?.savedStateHandle?.set(
+                            "index",
+                            index
+                        )
+                        navController.navigate("ulasan")
+                    }
+                )
+            }
+
+//        item { Spacer(modifier = Modifier.weight(1f)) }
+
+        }
+
+
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color(0x00F0FFF9))
+                .align(Alignment.End)
+                .padding(14.dp)
+        ) {
 
             Text(
-                text = "\n"+homeTripModel.location+"\n",
-                fontFamily = AlegreyaFontFamily,
+                text = "20k/people \n +Parking ", fontFamily = AlegreyaFontFamily,
                 fontWeight = FontWeight.Normal,
                 fontSize = 18.sp,
             )
 
-            Text(
-                text = homeTripModel.jenisWisata+"\n",
-                fontFamily = AlegreyaFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = 18.sp,
-            )
+            Spacer(modifier = Modifier.width(8.dp))
 
-            Text(
-                text = "About",
-                fontFamily = AlegreyaFontFamily,
-                fontWeight = FontWeight.ExtraBold,
-                fontSize = 22.sp,
-            )
-
-            Text(
-                text = homeTripModel.description,
-                fontFamily = AlegreyaFontFamily,
-                fontWeight = FontWeight.Normal,
-                fontSize = 18.sp,
-            )
-
-            CButton(text = "Ulasan Pengunjung",
+            CButton(text = "Booking Sekarang",
                 onClick = {
                     navController.navigate("login")
                 }
             )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-
-            Row (
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
-            ){
-
-                Text(text = "20k/people \n +Parking ",fontFamily = AlegreyaFontFamily,
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 18.sp,)
-
-                Spacer(modifier = Modifier.weight(1f))
-
-                CButton(text = "Booking Sekarang",
-                    onClick = {
-                        navController.navigate("login")
-                    }
-                )
-            }
         }
+    }
+
+
 
 }

@@ -108,7 +108,12 @@ fun NavigationView() {
                 Detail(navController, userObject)
             }
         }
-        Composable("ulasan"){ Ulasan(destinationReviewModel = , navController = )}
+        composable("ulasan") {
+            val userObject: Int? = navController.previousBackStackEntry?.savedStateHandle?.get("index")
+            if (userObject != null) {
+                Ulasan(index = userObject, navController = navController)
+            }
+        }
 
     }
 
